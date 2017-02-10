@@ -1,0 +1,9 @@
+{% include "partials/doc-head.html" %}
+<body class="kss">
+    {% include "partials/ui-header.html" %}
+    {% include "partials/ui-primary-navigation.html" %}
+    {% block content %}{% endblock %}
+    {% include "partials/ui-footer.html" %}
+    <script src="{{assetPath}}/js/app.js"></script>
+</body>
+</html>

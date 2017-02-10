@@ -1,0 +1,39 @@
+// Buttons
+//
+// Text about buttons
+//
+// Markup:
+//<button class="btn {{modifier_class}}">Submit</button>
+//
+// .btn--primary              - Hero, marquee buttons
+// .btn--arrow                - Button with an arrow
+// .btn--outline              - Secondary buttons
+// .btn--arrow.btn--primary   - Compound primary with arrow button
+//
+// Style guide: buttons
+
+.skip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+        .btn-skip {
+            height: 1px;
+            width: 1px;
+            position: absolute;
+            overflow: hidden;
+            top: -10px;
+            left: 0;
+            &:focus {
+                position: fixed;
+                height: auto;
+                width: auto;
+                margin:0 auto;
+                display: block;
+                left: 0;
+                right: 0;
+                top:5px;
+                text-align: center;
+            }
+        }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "kss-node-handlebars-builder",
+  "version": "3.0.0",
+  "description": "Custom KSS node builder",
+  "main": "builder.js",
+  "devDependencies": {
+    "node-sass": "^3.4.2"
+  }
+}
