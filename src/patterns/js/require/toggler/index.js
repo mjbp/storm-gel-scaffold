@@ -1,4 +1,4 @@
-import Toggler from './libs/toggler';
+import Toggler from 'storm-toggler';
 import CONSTANTS from '../../constants';
 
 export default () => {
