@@ -77,23 +77,25 @@ const patternsPath = '/patterns';
 const paths = {
 	src: {
 		app: {
-			css: './src/app/scss/',
-			js: './src/app/js/',
-			html: './src/app/templates/',
-			img: './src/app/img/',
-			fonts: './src/app/fonts/'
+			css: 'src/app/scss/',
+			js: 'src/app/js/',
+			html: 'src/app/templates/',
+			img: 'src/app/img/',
+			fonts: 'src/app/fonts/',
+			static: 'src/app/static'
 		},
 		patterns: {
-			css: './src/patterns/scss/',
-			js: './src/patterns/js/',
-			html: './src/patterns/templates/',
-			img: './src/patterns/img/',
-			fonts: './src/patterns/fonts/',
-			kss: './src/patterns/kss/'
+			css: 'src/patterns/scss/',
+			js: 'src/patterns/js/',
+			html: 'src/patterns/templates/',
+			img: 'src/patterns/img/',
+			fonts: 'src/patterns/fonts/',
+			kss: 'src/patterns/kss/'
 		}
 	},
 	dest: {
 		shared: {
+			static: `${outputDir}${sharedPath}/`,
 			css: `${outputDir}${sharedPath}/css/`,
 			js:  `${outputDir}${sharedPath}/js/`,
 			img: `${outputDir}${sharedPath}/img/`,
@@ -188,11 +190,17 @@ function scss(type){
 
 function img(type){
 	return gulp.src(`${paths.src[type].img}**/*`)
-		.pipe(imagemin({
-			progressive: true,
-			interlaced: true,
-			svgoPlugins: [{removeViewBox: true}]
-		}))
+	.pipe(imagemin([
+		imagemin.gifsicle({interlaced: true}),
+		imagemin.jpegtran({progressive:true}),
+		imagemin.optipng({optimizationLevel:5}),
+		imagemin.svgo({
+			plugins: [
+				{removeViewBox: false},
+				{cleanupIDs: true}
+			]
+		})
+	]))
 		.pipe(gulp.dest(paths.dest[type].img));
 }
 
@@ -200,6 +208,11 @@ function img(type){
 // 	return gulp.src(`${paths.src[type].fonts}**/*.*`)
 // 		.pipe(gulp.dest(paths.dest.fonts));
 // }
+
+function static(){
+	return gulp.src(`${paths.src.static}**/*.*`)
+	.pipe(gulp.dest(paths.dest.shared.static));
+}
 
 function serve(){
 	browserSync({
@@ -220,7 +233,8 @@ function watch(cb){
 		{ glob: `${paths.src.patterns.html}**/*.html`, tasks: ['patternsHTML'] },
 		{ glob: `${paths.src.patterns.css}**/*.scss`, tasks: ['patternsSCSS'] },
 		{ glob: `${paths.src.patterns.img}**/*`, tasks: ['patternsImg'] },
-		{ glob: `${paths.src.patterns.js}**/*`, tasks: ['patternsJS'] }
+		{ glob: `${paths.src.patterns.js}**/*`, tasks: ['patternsJS'] },
+		{ glob: `${paths.src.app.static}**/*`, tasks: ['static']},
 	];
 	watchers.forEach(watcher => {
 		cb && watcher.tasks.push(cb);
@@ -258,6 +272,8 @@ gulp.task('appJS', ['appJSCore', 'appJSAsync', 'appJSPolyfills']);
 gulp.task('appHTML', html.bind(null, 'app'));
 gulp.task('appImg', img.bind(null, 'app'));
 
+gulp.task('static', static);
+
 //patterns
 gulp.task('patternsJSCore', jsCore.bind(null, 'patterns'));
 gulp.task('patternsJSAsync', jsAsync.bind(null, 'patterns'));
@@ -280,7 +296,7 @@ gulp.task('clean', clean);
 gulp.task('server', serve);
 
 gulp.task('serve', function(){
-	runSequence('clean', ['appSCSS'], ['index', 'patternsImg', 'appImg', 'patternsHTML', 'appHTML', 'appJS', 'patternsJS', 'kss', 'patternsSCSS'], serve);
+	runSequence('clean', ['appSCSS'], ['index', 'static', 'patternsImg', 'appImg', 'patternsHTML', 'appHTML', 'appJS', 'patternsJS', 'kss', 'patternsSCSS'], serve);
 });
 
 gulp.task('compile', function(){

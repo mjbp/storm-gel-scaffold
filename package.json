@@ -1,16 +1,23 @@
 {
   "name": "gel-scaffold",
   "version": "0.1.0",
-  "description": "",
+  "description": "Project prototype and pattern library scaffold",
   "repository": "",
   "author": "stormid",
   "license": "ISC",
   "scripts": {
     "start": "node_modules/.bin/gulp serve",
+    "production": "node_modules/.bin/gulp watch --production",
+    "development": "node_modules/.bin/gulp serve --development",
     "watch": "node_modules/.bin/gulp watch",
-    "serve": "node_modules/.bin/gulp serve"
+    "serve": "node_modules/.bin/gulp serve",
+    "test": "source-map-explorer build/static/js/app.js",
+    "disc": "discify build/static/js/app.js >disc.html"
   },
   "dependencies": {
+    "babel-core": "latest",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "latest",
     "babelify": "latest",
     "browser-sync": "latest",
@@ -18,7 +25,6 @@
     "classlist-polyfill": "latest",
     "del": "latest",
     "es6-object-assign": "latest",
-    "es6-promise": "latest",
     "fontfaceobserver": "latest",
     "gulp": "latest",
     "gulp-autoprefixer": "latest",
@@ -31,20 +37,22 @@
     "gulp-notify": "latest",
     "gulp-nunjucks-render": "latest",
     "gulp-pixrem": "latest",
-    "gulp-plumber": "^1.0.0",
+    "gulp-plumber": "latest",
     "gulp-rename": "latest",
     "gulp-sass": "latest",
     "gulp-sourcemaps": "latest",
     "gulp-uglify": "latest",
     "gulp-util": "latest",
-    "kss": "3.0.0-beta.17",
+    "gulp-wait": "latest",
     "picturefill": "latest",
-    "run-sequence": "^1.2.2",
+    "promise-polyfill": "^6.0.2",
+    "run-sequence": "latest",
     "storm-load": "latest",
     "storm-outliner": "latest",
     "storm-skip": "latest",
-    "storm-toggler": "latest",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "storm-toggle": "latest",
+    "vinyl-buffer": "latest",
+    "vinyl-source-stream": "latest",
+    "kss": "3.0.0-beta.17"
   }
 }
